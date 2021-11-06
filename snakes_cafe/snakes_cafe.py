@@ -1,42 +1,21 @@
 
-rest = [
-    {
-        "name": "Appetizers",
-        "menu": [
-            "Wings",
-            "Cookies",
-            "Spring Rolls",
-                   ],
-    },
-    {
-        "name": "Entrees",
-        "menu": [
-            "Salmon",
-            "Steak",
-            "Meat Tornado",
-            "A Literal Garden",
-        ],
-    },
-    {
-        "name":"Desserts",
-        "menu":[
-            "Ice Cream",
-             "Cake",
-             "Pie",
-             ],
-    },
-    {
-        "name": "Drinks",
-        "menu": [
-            "Coffee",
-            "Tea",
-            "Unicorn Tears",
-                    ],
-    },
-
+restMenu = {
     
+         "Appetizers": [ "Wings", "Cookies", "Spring Rolls"],
+    
+         "Entrees": ["Salmon","Steak", "Meat Tornado", "A Literal Garden"], 
+    
+        "Desserts":["Ice Cream","Cake", "Pie" ],
+    
+         "Drinks": ["Coffee","Tea", "Unicorn Tears"], 
+}
 
-]
+customer_orders = []
+
+allItems = []
+
+for item in restMenu.values():
+    allItems +=item
 
 
 welcome_msg = """ 
@@ -58,21 +37,52 @@ def printmenu():
 
     print(welcome_msg)
 
-    for item in range(len(rest)):
-        print(rest[item]['name'])
+    for item in restMenu.keys():
+        print(item)
         print('----------')
-        for j in range(len(rest[item]['menu'])):
-            print(rest[item]['menu'][j])
-    print(get_order_question)
+        for j in restMenu[item]:
+            print(j)
+        
 
 
 def get_order_customer():
     printmenu()
-    order = input('> ')
-    print(f'your order is : {order}')
+    print(get_order_question)
+    order = ''
+    # order = input('> ')
+    # print(f'your order is : {order}')
     while order !='quit':
-          order = input('> ')
+          order = input('> ').capitalize() # capitalize the first character and remain the rest
+          if order in allItems:
+             customer_orders.append(order)
+             # list.count(value)
+             # ** 1 order of Wings have been added to your meal **
+             count_order = customer_orders.count(order)
+             print(f"** {count_order} order of {order} have been added to your meal ** ")
+          elif order =='Quit':
+              print("Exit of the program...")
+              break
+          else:
+              print("Sorry! order is not in our menu")
 
+def print_order_customer( customer_orders ):
+    start = """
+    ***********************************
+    ** you are welcome! your order is **
+    ***********************************
+    """
+    end = """
+    ***********************************
+    ************ Thanks ***************
+    ***********************************
+    """
+
+    print(start)
+    for item in customer_orders:
+           print(f"     {customer_orders.count(item)} order of {item}")
+    print(end)
    
-        
-get_order_customer()
+if __name__ == "__main__":
+    
+ get_order_customer()
+ print_order_customer(customer_orders)
